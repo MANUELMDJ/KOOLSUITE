@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subwoofer Calc - KOOLTOOLS</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+      background: linear-gradient(to bottom, #ff0000, #000000);
+      color: #fff;
+      text-align: center;
+    }
+    h1 {
+      font-size: 1.6em;
+      margin-top: 10px;
+    }
+    label, select, button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      font-size: 1em;
+    }
+    select, button {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+    }
+    button {
+      background-color: #ff0000;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #cc0000;
+    }
+    #resultado {
+      background: #222;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de Subwoofers</h1>
+  <label for="cantidad">Cantidad de Subwoofers:</label>
+  <select id="cantidad">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+  </select>
+  <label for="impedancia">Impedancia por bobina (Ohmios):</label>
+  <select id="impedancia">
+    <option value="2">2Ω</option>
+    <option value="4">4Ω</option>
+    <option value="8">8Ω</option>
+  </select>
+  <label for="bobina">Tipo de Subwoofer:</label>
+  <select id="bobina">
+    <option value="1">SVC (una bobina)</option>
+    <option value="2">DVC (dos bobinas)</option>
+  </select>
+  <label for="conexion">Tipo de Conexión:</label>
+  <select id="conexion">
+    <option value="serie">Serie</option>
+    <option value="paralelo">Paralelo</option>
+    <option value="mixto">Mixto (DVC)</option>
+  </select>
+  <button onclick="calcular()">Calcular Impedancia Total</button>
+  <div id="resultado"></div>
+  <script>
+    function calcular() {
+      const cantidad = parseInt(document.getElementById("cantidad").value);
+      const impedancia = parseFloat(document.getElementById("impedancia").value);
+      const bobina = parseInt(document.getElementById("bobina").value);
+      const conexion = document.getElementById("conexion").value;
+      let resultado = "", impedanciaFinal;
+      if (conexion === "serie") {
+        impedanciaFinal = cantidad * bobina * impedancia;
+      } else if (conexion === "paralelo") {
+        impedanciaFinal = impedancia / (cantidad * bobina);
+      } else if (conexion === "mixto") {
+        if (bobina !== 2) {
+          resultado = "La conexión mixta solo aplica a subwoofers DVC.";
+          document.getElementById("resultado").innerText = resultado;
+          return;
+        }
+        const intermedio = impedancia / 2;
+        impedanciaFinal = intermedio / cantidad;
+      }
+      resultado = `Impedancia total estimada: ${impedanciaFinal.toFixed(2)}Ω\n`;
+      if (impedanciaFinal < 2) {
+        resultado += "⚠️ Cuidado: muy baja para la mayoría de amplificadores.";
+      } else if (impedanciaFinal > 8) {
+        resultado += "⚠️ Muy alta, posible pérdida de potencia.";
+      } else {
+        resultado += "✅ Rango aceptable para muchos amplificadores.";
+      }
+      document.getElementById("resultado").innerText = resultado;
+    }
+  </script>
+</body>
+</html>
