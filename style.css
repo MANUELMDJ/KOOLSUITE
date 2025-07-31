@@ -8,49 +8,81 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
 header {
   text-align: center;
-  padding: 20px;
+  padding: 20px 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
+
 header img {
-  width: 120px;
+  width: 100px;
+  max-width: 100%;
   border-radius: 12px;
 }
+
 h1 {
   margin: 10px 0;
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #fff;
 }
+
 .apps-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 15px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  padding: 10px;
   width: 100%;
   max-width: 500px;
+  box-sizing: border-box;
 }
+
 .tool-card {
   background: #330000;
   border: 2px solid #ff0000;
   border-radius: 12px;
-  padding: 20px;
+  padding: 15px 10px;
   text-align: center;
   color: #fff;
   text-decoration: none;
   box-shadow: 0 0 10px #ff0000;
   transition: transform 0.2s;
 }
+
 .tool-card:hover {
   transform: scale(1.05);
 }
+
 .tool-card .icon {
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
+
 .tool-card .label {
-  margin-top: 10px;
-  font-size: 1rem;
+  margin-top: 8px;
+  font-size: 0.9rem;
 }
+
 .tool-card.disabled {
   opacity: 0.5;
   pointer-events: none;
+}
+
+/* Estilos específicos para pantallas pequeñas */
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  .tool-card {
+    padding: 12px 8px;
+  }
+
+  .tool-card .icon {
+    font-size: 1.5rem;
+  }
+
+  .tool-card .label {
+    font-size: 0.85rem;
+  }
 }
